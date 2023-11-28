@@ -13,6 +13,7 @@ import UserRegister from "./component/register";
 import Project from "./component/Projects";
 import About from "./component/about";
 import Profile from "./components/profile.jsx";
+import HomePage from "./components/home.jsx";
 function App() {
   const { state, dispatch } = useContext(GlobalContext);
 
@@ -76,6 +77,7 @@ function App() {
         {/* <Navcomponent theme={state.darkTheme} islogin={false} /> */}
         <Routes>
           
+          <Route path="*" element={<HomePage to="/" replace={true} />} />
           <Route path="*" element={<Profile to="/:Username" replace={true} />} />
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
