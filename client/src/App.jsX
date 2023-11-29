@@ -1,22 +1,13 @@
 import React, { useEffect, useState , useContext} from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import Adminlogin from "./component/adminlogin";
-import PostPage from "./component/post.jsx";
-import Home from "./home.jsx";
-import Navcomponent from "./component/navbar.jsx";
 import axios from "axios";
-import ArticlesPage from "./component/article";
-import Dashboard from "./component/dashboard";
 import {GlobalContext} from  './context/context.jsx'
-import UserLogin from "./component/login";
-import UserRegister from "./component/register";
-import Project from "./component/Projects";
-import About from "./component/about";
+// import UserLogin from "./component/login";
+// import UserRegister from "./component/register";
 import Profile from "./components/profile.jsx";
 import HomePage from "./components/home.jsx";
 function App() {
   const { state, dispatch } = useContext(GlobalContext);
-
   const [theme, setTheme] = useState(null); // Set the initial state as needed
   const [login, setLogin] = useState(null);
   useEffect(() => {
@@ -30,8 +21,6 @@ function App() {
       }
     );
   }, []);
-
-  
   const loginHandler = async()=>{
     try {
       const res = await axios.get("/getToken",
@@ -42,7 +31,6 @@ function App() {
         type: "USER_LOGIN",
         payload: res.data.data,
       });
-
     } catch (error) {
       console.log(error)
       dispatch({
@@ -53,22 +41,17 @@ function App() {
   useEffect(()=>{
    loginHandler()
   },[])
-
   useEffect(()=>{
-           
   },[])
   // Other code...
   console.log(state.role , state.isLogin)
   return (
     <div>
-      
-      
       {state.isLogin === true && state.role === "user" ? (
         <>
           {/* <Navcomponent theme={state.darkTheme} islogin={true} /> */}
           <Routes>
-            <Route exact path="/" element={<Home theme={state.darkTheme} />} />
-
+            {/* <Route exact path="/" element={<Home theme={state.darkTheme} />} /> */}
           </Routes>
         </>
       ):null}
@@ -76,17 +59,19 @@ function App() {
         <>
         {/* <Navcomponent theme={state.darkTheme} islogin={false} /> */}
         <Routes>
-          
           <Route path="*" element={<HomePage to="/" replace={true} />} />
-          <Route path="*" element={<Profile to="/:Username" replace={true} />} />
-          <Route path="*" element={<Navigate to="/" replace={true} />} />
+          <Route exact path="/:Username" element={<Profile theme={state.darkTheme} />} />
+
+
+
+
+
+<Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
       </>
       ):null
-    
     }
     </div>
   );
 }
-
 export default App;
