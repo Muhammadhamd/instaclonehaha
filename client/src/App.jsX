@@ -1,16 +1,13 @@
 import React, { useEffect, useState , useContext} from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import axios from "axios";
-
 import {GlobalContext} from  './context/context.jsx'
 // import UserLogin from "./component/login";
 // import UserRegister from "./component/register";
-
 import Profile from "./components/profile.jsx";
 import HomePage from "./components/home.jsx";
 function App() {
   const { state, dispatch } = useContext(GlobalContext);
-
   const [theme, setTheme] = useState(null); // Set the initial state as needed
   const [login, setLogin] = useState(null);
   useEffect(() => {
@@ -24,8 +21,6 @@ function App() {
       }
     );
   }, []);
-
-  
   const loginHandler = async()=>{
     try {
       const res = await axios.get("/getToken",
@@ -36,7 +31,6 @@ function App() {
         type: "USER_LOGIN",
         payload: res.data.data,
       });
-
     } catch (error) {
       console.log(error)
       dispatch({
@@ -47,23 +41,17 @@ function App() {
   useEffect(()=>{
    loginHandler()
   },[])
-
   useEffect(()=>{
-           
   },[])
   // Other code...
   console.log(state.role , state.isLogin)
   return (
     <div>
-      
-      
       {state.isLogin === true && state.role === "user" ? (
         <>
           {/* <Navcomponent theme={state.darkTheme} islogin={true} /> */}
           <Routes>
-
-            <Route exact path="/" element={<HomePage theme={state.darkTheme} />} />
-
+            {/* <Route exact path="/" element={<Home theme={state.darkTheme} />} /> */}
           </Routes>
         </>
       ):null}
@@ -79,13 +67,9 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
       </>
-      )
-      :
-     null
-    
+      ):null
     }
     </div>
   );
 }
-
 export default App;
