@@ -1,17 +1,11 @@
 import React, { useEffect, useState , useContext} from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import Adminlogin from "./component/adminlogin";
-import PostPage from "./component/post.jsx";
-import Home from "./home.jsx";
-import Navcomponent from "./component/navbar.jsx";
 import axios from "axios";
-import ArticlesPage from "./component/article";
-import Dashboard from "./component/dashboard";
+
 import {GlobalContext} from  './context/context.jsx'
-import UserLogin from "./component/login";
-import UserRegister from "./component/register";
-import Project from "./component/Projects";
-import About from "./component/about";
+// import UserLogin from "./component/login";
+// import UserRegister from "./component/register";
+
 import Profile from "./components/profile.jsx";
 import HomePage from "./components/home.jsx";
 function App() {
@@ -67,22 +61,27 @@ function App() {
         <>
           {/* <Navcomponent theme={state.darkTheme} islogin={true} /> */}
           <Routes>
-            <Route exact path="/" element={<Home theme={state.darkTheme} />} />
+
+            <Route exact path="/" element={<HomePage theme={state.darkTheme} />} />
 
           </Routes>
         </>
       ):null}
-      {state.isLogin === false?(
+      {state.isLogin === false ? (
         <>
         {/* <Navcomponent theme={state.darkTheme} islogin={false} /> */}
         <Routes>
           
-          <Route path="*" element={<HomePage to="/" replace={true} />} />
-          <Route path="*" element={<Profile to="/:Username" replace={true} />} />
+         <Route exact path="/" element={<HomePage theme={state.darkTheme} />} />
+
+         <Route exact path="/:username" element={<Profile theme={state.darkTheme} />} />
+
           <Route path="*" element={<Navigate to="/" replace={true} />} />
         </Routes>
       </>
-      ):null
+      )
+      :
+     null
     
     }
     </div>
